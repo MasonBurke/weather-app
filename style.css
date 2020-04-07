@@ -20,6 +20,11 @@
     margin-left: 0%;
 }
 
-.weather {
-   
+.list-group-item {
+    list-style-type: none;
+    padding:0;
+    margin:0;
+    margin-left: 40px;
+  
 }
+   

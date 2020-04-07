@@ -1,12 +1,14 @@
+
+// Search Button
 $(document).ready(function(){
     $("#searchBtn").on("click", function(){
         event.preventDefault();
         var citySearch = $("#citySearch").val();
         $("#citySearch").val("");
         searchWeather(citySearch)
-        // console.log(citySearch)
     })
 
+    // api and local storage
 function searchWeather(city){
     $.ajax({
         type:"GET",
@@ -14,18 +16,15 @@ function searchWeather(city){
         dataType: "json",
 
         success: function(data){
-            if (history.indexOf(city)=== -1){
-                history.push(city)
-                window.localStorage.setItem("history", JSON.stringify(history))
-                // going to need to call function that will create rows for btns
                 if(history.indexOf(city)===-1){
                     history.push(city)
                     window.localStorage.setItem("history", JSON.stringify(history))
                     makeRow(city)
                 }
-            }
+
             $("#today").empty()
 
+            //text to the page
             console.log(data)
             var date = $("<h3>").addClass("card-title").text(data.name + " (" + new Date().toLocaleDateString()+ ")")
             var card = $("<div>").addClass("card")
@@ -49,7 +48,7 @@ function searchWeather(city){
 
     })
 }
-
+    //five day forecast
     function fiveDay(city){
         $.ajax({
             type: "GET",
@@ -75,6 +74,7 @@ function searchWeather(city){
           }
         })  
     }
+        // uv index
         function uvIndex(lat, lon){
             $.ajax({
                 type: "GET",
@@ -100,26 +100,26 @@ function searchWeather(city){
 
     }
 
-    // function makeRow(text){
-    //     var li = $("<li>").text(text)
-    //     $(".history").append(li)    
+    //clickable buttons
+    function makeRow(text){
+        var li = $("<li>").addClass("list-group-item list-group-item-action").text(text)
+        $(".history").append(li)    
+    }
 
-    //     // attempt to create city name buttons 
-    //     for (var i = 0; i < citySearch.length; i++){
-    //      var button = $("<button>"); 
-    //      button.text(citySearch[i])
-    //      $(citySearch).append(button)
-    //     }
-    // }
+    makeRow()
 
-    // makeRow()
-
-//create a function for getting 5 day forecast 
-//create a function to get uv index  -- take in 2 values: latitude & longitude
-//create a function for creating a row for search and history
-// create onclick for history buttons
-
+$(".history").on("click", "li", function(){
+    searchWeather($(this).text())
+})
 
 
 var history = JSON.parse(window.localStorage.getItem("history"))||[]
+if (history.length > 0){
+    searchWeather(history[history.length -1])
+}
+for (var i = 0; i < history.length; i++){
+    makeRow(history[i])
+}
+
+
 });
