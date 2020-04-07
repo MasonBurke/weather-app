@@ -100,9 +100,9 @@ function searchWeather(city){
 
     }
 
-    function makeRow(text){
-        var li = $("<li>").text(text)
-        $(".history").append(li)    
+    // function makeRow(text){
+    //     var li = $("<li>").text(text)
+    //     $(".history").append(li)    
 
     //     // attempt to create city name buttons 
     //     for (var i = 0; i < citySearch.length; i++){
@@ -112,7 +112,7 @@ function searchWeather(city){
     //     }
     // }
 
-    makeRow()
+    // makeRow()
 
 //create a function for getting 5 day forecast 
 //create a function to get uv index  -- take in 2 values: latitude & longitude
